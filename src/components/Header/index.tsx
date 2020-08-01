@@ -3,12 +3,13 @@ import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import { colors } from '../../styles';
 import Navigation from './Navigation';
+import SortOption from './SortOption';
 
 export default function Header(): JSX.Element {
   return (
     <Wrapper>
       <Navigation />
-      <SortOtopn>SortOptions</SortOtopn>
+      <SortOption />
     </Wrapper>
   );
 }

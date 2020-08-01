@@ -1,6 +1,12 @@
-import { observable, computed, action } from 'mobx';
+import { observable, computed, action, autorun } from 'mobx';
 import { Product } from '../types';
 import products from '../components/ProductList/lists.json';
+
+export enum SortOption {
+  Default = 'Default',
+  PriceASC = 'PriceASC',
+  PriceDESC = 'PriceDESC',
+}
 
 export interface ProductStoreInterface {
   originProducts: Product[];
@@ -9,26 +15,31 @@ export interface ProductStoreInterface {
   wishs: Record<string, boolean | null>;
   toggleWish: (id: number) => void;
   removeWish: (id: number) => void;
+  sortOption: SortOption;
   wishProducts: Product[];
 }
 
 class ProductStore implements ProductStoreInterface {
-  @observable originProducts: Product[] = [];
-  @observable wishs: Record<string, boolean | null> = {};
-  @observable page = 1;
+  @observable originProducts: Product[];
+  @observable wishs: Record<string, boolean | null>;
+  @observable page: number;
+  @observable sortOption: SortOption;
 
   constructor() {
     this.originProducts = products;
+    this.wishs = {};
+    this.page = 1;
+    this.sortOption = SortOption.Default;
   }
 
   @computed
   get products() {
-    return this.originProducts.slice(0, this.page * 10);
+    return this.sortedProduct.slice(0, this.page * 10);
   }
 
   @computed
   get wishProducts() {
-    return this.originProducts.filter((product) => product.id in this.wishs);
+    return this.sortedProduct.filter((product) => product.id in this.wishs);
   }
 
   @action
@@ -51,6 +62,19 @@ class ProductStore implements ProductStoreInterface {
     delete cloneWishs[id];
     this.wishs = cloneWishs;
   };
+
+  @computed
+  get sortedProduct() {
+    const sortFunction = (a: Product, b: Product) =>
+      this.sortOption === SortOption.PriceASC
+        ? a.price - b.price
+        : b.price - a.price;
+    if (this.sortOption === SortOption.Default) {
+      return this.originProducts;
+    } else {
+      return [...this.originProducts].sort(sortFunction);
+    }
+  }
 }
 
 export default ProductStore;
