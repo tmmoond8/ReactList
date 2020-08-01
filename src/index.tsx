@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import { MobxProvider } from './store';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <MobxProvider>
+      <App />
+    </MobxProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

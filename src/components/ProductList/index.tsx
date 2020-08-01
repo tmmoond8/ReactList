@@ -1,16 +1,21 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import styled from '@emotion/styled';
-import lists from './lists.json';
+import { StoreContext, Stores } from '../../store';
 import ProductItem from './ProductItem';
 import { mobile, desktop } from '../../styles';
+import { useContext } from 'react';
 
 export default function List(): JSX.Element {
+  const {
+    product: { products },
+  } = useContext(StoreContext) as Stores;
   return (
     <Wrapper>
       <CardList>
-        {lists.map((item) => (
+        {products.map((item) => (
           <ProductItem
+            key={item.id}
             title={item.title}
             wish={true}
             toggleWish={() => {}}
@@ -34,36 +39,36 @@ const CardList = styled.ol`
     margin-top: 16px;
     margin-left: 16px;
   }
-  & > li:nth-child(2n - 1) {
+  & > li:nth-of-type(2n - 1) {
     margin-left: 0;
   }
-  & > li:nth-child(1),
-  & > li:nth-child(2) {
+  & > li:nth-of-type(1),
+  & > li:nth-of-type(2) {
     margin-top: 0;
   }
   ${mobile(css`
     grid-template-columns: repeat(3, 1fr);
-    & > li:nth-child(3) {
+    & > li:nth-of-type(3) {
       margin-top: 0;
     }
-    & > li:nth-child(2n - 1) {
+    & > li:nth-of-type(2n - 1) {
       margin-left: 16px;
     }
 
-    & > li:nth-child(3n - 2) {
+    & > li:nth-of-type(3n - 2) {
       margin-left: 0;
     }
   `)}
 
   ${desktop(css`
     grid-template-columns: repeat(4, 1fr);
-    & > li:nth-child(4) {
+    & > li:nth-of-type(4) {
       margin-top: 0;
     }
-    & > li:nth-child(3n - 2) {
+    & > li:nth-of-type(3n - 2) {
       margin-left: 16px;
     }
-    & > li:nth-child(4n - 3) {
+    & > li:nth-of-type(4n - 3) {
       margin-left: 0;
     }
   `)}
