@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
-import colors from '../../styles/colors';
+import { colors } from '../../styles';
 import Navigation from './Navigation';
 
 export default function Header(): JSX.Element {

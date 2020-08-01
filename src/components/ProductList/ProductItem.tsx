@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
-import colors from '../../styles/colors';
+import { colors } from '../../styles';
 
 interface ProductItemProps {
   title: string;
@@ -20,7 +20,7 @@ export default function ProductItem(props: ProductItemProps): JSX.Element {
         <h3>{title}</h3>
         <p>{price.toLocaleString()}원</p>
       </Contents>
-      <Wish wish={wish} onClick={toggleWish} />
+      <Wish onClick={toggleWish}>{wish ? '💙' : '🤍'}</Wish>
     </Item>
   );
 }
@@ -28,6 +28,7 @@ export default function ProductItem(props: ProductItemProps): JSX.Element {
 const Item = styled.li`
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 const Thumbnail = styled.img`
   width: 100%;
@@ -61,4 +62,10 @@ const Contents = styled.div`
     color: ${colors.blackA70};
   }
 `;
-const Wish = styled.div<{ wish: boolean }>``;
+const Wish = styled.div`
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 24px;
+  color: white;
+`;
