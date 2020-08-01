@@ -8,7 +8,7 @@ import { useContext } from 'react';
 
 export default function List(): JSX.Element {
   const {
-    product: { products },
+    product: { products, toggleWish, wishs },
   } = useContext(StoreContext) as Stores;
   return (
     <Wrapper>
@@ -17,8 +17,8 @@ export default function List(): JSX.Element {
           <ProductItem
             key={item.id}
             title={item.title}
-            wish={true}
-            toggleWish={() => {}}
+            wish={item.id in wishs}
+            toggleWish={() => toggleWish(item.id)}
             thumbnail={item.thumbnail}
             price={item.price}
           />
