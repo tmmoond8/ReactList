@@ -1,14 +1,13 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
-import colors from '../styles/colors';
+import colors from '../../styles/colors';
+import Navigation from './Navigation';
 
-interface HeaderProps {}
-
-export default function Header(props: HeaderProps): JSX.Element {
+export default function Header(): JSX.Element {
   return (
     <Wrapper>
-      <Navigation>Navigation</Navigation>
+      <Navigation />
       <SortOtopn>SortOptions</SortOtopn>
     </Wrapper>
   );
@@ -19,7 +18,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 50px;
+  padding: 0 16px;
   background-color: ${colors.sky};
 `;
-const Navigation = styled.nav``;
 const SortOtopn = styled.div``;

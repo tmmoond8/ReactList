@@ -9,8 +9,8 @@ function App() {
   return (
     <React.Fragment>
       <GlobalStyles />
-      <Header />
       <Router>
+        <Header />
         <Switch>
           <Route path="/products">
             <Products />
