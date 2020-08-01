@@ -6,14 +6,15 @@ export interface ProductStoreInterface {
   originProducts: Product[];
   page: number;
   products: Product[];
-  wishs: Record<string, number>;
+  wishs: Record<string, boolean | null>;
   toggleWish: (id: number) => void;
+  removeWish: (id: number) => void;
   wishProducts: Product[];
 }
 
 class ProductStore implements ProductStoreInterface {
   @observable originProducts: Product[] = [];
-  @observable wishs: Record<string, number> = {};
+  @observable wishs: Record<string, boolean | null> = {};
   @observable page = 1;
 
   constructor() {
@@ -33,17 +34,22 @@ class ProductStore implements ProductStoreInterface {
   @action
   toggleWish = (id: number) => {
     if (id in this.wishs) {
-      console.log('wish remove');
       const cloneWishs = { ...this.wishs };
       delete cloneWishs[id];
       this.wishs = cloneWishs;
     } else {
-      console.log('wish add');
       this.wishs = {
         ...this.wishs,
         [id]: true,
       };
     }
+  };
+
+  @action
+  removeWish = (id: number) => {
+    const cloneWishs = { ...this.wishs };
+    delete cloneWishs[id];
+    this.wishs = cloneWishs;
   };
 }
 

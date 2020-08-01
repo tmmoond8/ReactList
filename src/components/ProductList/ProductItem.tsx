@@ -5,14 +5,15 @@ import { colors } from '../../styles';
 
 interface ProductItemProps {
   title: string;
-  wish: boolean;
+  wish: boolean | null;
   toggleWish: () => void;
+  removeWish: () => void;
   thumbnail: string;
   price: number;
 }
 
 export default function ProductItem(props: ProductItemProps): JSX.Element {
-  const { title, wish, toggleWish, thumbnail, price } = props;
+  const { title, wish, toggleWish, removeWish, thumbnail, price } = props;
   return (
     <Item>
       <Thumbnail src={thumbnail} />
@@ -20,7 +21,10 @@ export default function ProductItem(props: ProductItemProps): JSX.Element {
         <h3>{title}</h3>
         <p>{price.toLocaleString()}원</p>
       </Contents>
-      <Wish onClick={toggleWish}>{wish ? '💙' : '🤍'}</Wish>
+      {wish !== null && (
+        <ActionButton onClick={toggleWish}>{wish ? '💙' : '🤍'}</ActionButton>
+      )}
+      {wish === null && <ActionButton onClick={removeWish}>❌</ActionButton>}
     </Item>
   );
 }
@@ -62,10 +66,11 @@ const Contents = styled.div`
     color: ${colors.blackA70};
   }
 `;
-const Wish = styled.div`
+const ActionButton = styled.button`
   position: absolute;
   top: 16px;
   right: 16px;
   font-size: 24px;
   color: white;
+  cursor: pointer;
 `;

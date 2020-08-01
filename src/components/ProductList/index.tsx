@@ -1,15 +1,32 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import styled from '@emotion/styled';
-import { StoreContext, Stores } from '../../store';
+import { useCallback } from 'react';
 import ProductItem from './ProductItem';
 import { mobile, desktop } from '../../styles';
-import { useContext } from 'react';
+import { Product } from '../../types';
 
-export default function List(): JSX.Element {
-  const {
-    product: { products, toggleWish, wishs },
-  } = useContext(StoreContext) as Stores;
+interface ListProps {
+  products: Product[];
+  wishs?: Record<string, boolean | null>;
+  toggleWish?: (id: number) => void;
+  removeWish?: (id: number) => void;
+}
+
+export default function List(props: ListProps): JSX.Element {
+  const { products, wishs, toggleWish, removeWish } = props;
+  const handleToggleWish = useCallback(
+    (id: number) => {
+      toggleWish && toggleWish(id);
+    },
+    [toggleWish],
+  );
+  const handleRemoveWish = useCallback(
+    (id: number) => {
+      removeWish && removeWish(id);
+    },
+    [removeWish],
+  );
   return (
     <Wrapper>
       <CardList>
@@ -17,8 +34,9 @@ export default function List(): JSX.Element {
           <ProductItem
             key={item.id}
             title={item.title}
-            wish={item.id in wishs}
-            toggleWish={() => toggleWish(item.id)}
+            wish={wishs ? item.id in wishs : null}
+            toggleWish={() => handleToggleWish(item.id)}
+            removeWish={() => handleRemoveWish(item.id)}
             thumbnail={item.thumbnail}
             price={item.price}
           />
