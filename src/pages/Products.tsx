@@ -17,7 +17,7 @@ export default observer(function Products(): JSX.Element {
 
   useEffect(() => {
     if (document) {
-      const handleScroll = throttle(100, () => {
+      const handleScroll = throttle(300, () => {
         const {
           scrollHeight,
           scrollTop,

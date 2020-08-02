@@ -1,6 +1,6 @@
 import { observable, computed, action } from 'mobx';
+import { fetchProducts } from '../apis';
 import { Product } from '../types';
-import products from '../components/ProductList/lists.json';
 
 export enum SortOption {
   Default = 'Default',
@@ -24,9 +24,19 @@ class ProductStore implements ProductStoreInterface {
   @observable sortOption: SortOption;
 
   constructor() {
-    this.originProducts = products;
+    this.originProducts = [];
     this.wishs = {};
     this.sortOption = SortOption.Default;
+    this.fetch();
+  }
+
+  async fetch() {
+    try {
+      const { data } = await fetchProducts();
+      this.originProducts = data;
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   @computed
