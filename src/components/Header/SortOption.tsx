@@ -1,9 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
-import { useState } from 'react';
 import { colors } from '../../styles';
-import { navigations } from './constants';
 import { useStore, observer } from '../../store';
 import { SortOption } from '../../store/product';
 

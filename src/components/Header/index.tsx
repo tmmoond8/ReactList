@@ -22,4 +22,3 @@ const Wrapper = styled.div`
   padding: 0 16px;
   background-color: ${colors.sky};
 `;
-const SortOtopn = styled.div``;

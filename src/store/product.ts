@@ -1,4 +1,4 @@
-import { observable, computed, action, autorun } from 'mobx';
+import { observable, computed, action } from 'mobx';
 import { Product } from '../types';
 import products from '../components/ProductList/lists.json';
 
@@ -10,7 +10,6 @@ export enum SortOption {
 
 export interface ProductStoreInterface {
   originProducts: Product[];
-  page: number;
   products: Product[];
   wishs: Record<string, boolean | null>;
   toggleWish: (id: number) => void;
@@ -22,24 +21,17 @@ export interface ProductStoreInterface {
 class ProductStore implements ProductStoreInterface {
   @observable originProducts: Product[];
   @observable wishs: Record<string, boolean | null>;
-  @observable page: number;
   @observable sortOption: SortOption;
 
   constructor() {
     this.originProducts = products;
     this.wishs = {};
-    this.page = 1;
     this.sortOption = SortOption.Default;
   }
 
   @computed
-  get products() {
-    return this.sortedProduct.slice(0, this.page * 10);
-  }
-
-  @computed
   get wishProducts() {
-    return this.sortedProduct.filter((product) => product.id in this.wishs);
+    return this.products.filter((product) => product.id in this.wishs);
   }
 
   @action
@@ -64,7 +56,7 @@ class ProductStore implements ProductStoreInterface {
   };
 
   @computed
-  get sortedProduct() {
+  get products() {
     const sortFunction = (a: Product, b: Product) =>
       this.sortOption === SortOption.PriceASC
         ? a.price - b.price

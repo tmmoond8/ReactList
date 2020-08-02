@@ -13,20 +13,20 @@ interface ListProps {
   removeWish?: (id: number) => void;
 }
 
-export default function List(props: ListProps): JSX.Element {
+const useHandler = (handler?: (id: number) => void) => {
+  return useCallback(
+    (id: number) => {
+      handler && handler(id);
+    },
+    [handler],
+  );
+};
+
+export default function List(props: ListProps) {
   const { products, wishs, toggleWish, removeWish } = props;
-  const handleToggleWish = useCallback(
-    (id: number) => {
-      toggleWish && toggleWish(id);
-    },
-    [toggleWish],
-  );
-  const handleRemoveWish = useCallback(
-    (id: number) => {
-      removeWish && removeWish(id);
-    },
-    [removeWish],
-  );
+  const handleToggleWish = useHandler(toggleWish);
+  const handleRemoveWish = useHandler(removeWish);
+
   return (
     <Wrapper>
       <CardList>
