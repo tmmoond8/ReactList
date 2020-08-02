@@ -2,13 +2,16 @@
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
 import { useMemo } from 'react';
-import List, { useScrollFetch } from '../components/ProductList';
+import List, {
+  useScrollFetch,
+  useMemoryScroll,
+} from '../components/ProductList';
 import { useStore, observer } from '../store';
 
 export default observer(function Products(): JSX.Element {
   const {
     product: { wishProducts, removeWish },
-    ui: { wishProductPage, wishProductPageUp },
+    ui: { wishProductPage, wishProductPageUp, wishProductScroll },
   } = useStore();
 
   const products = useMemo(() => {
@@ -16,6 +19,7 @@ export default observer(function Products(): JSX.Element {
   }, [wishProductPage, wishProducts]);
 
   useScrollFetch(wishProductPageUp);
+  useMemoryScroll(wishProductScroll);
 
   return products.length > 0 ? (
     <List products={products} removeWish={removeWish} />

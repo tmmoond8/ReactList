@@ -1,4 +1,10 @@
 import { observable, computed, action } from 'mobx';
+import { PagePaths } from '../types';
+
+export enum Page {
+  Products = '/products',
+  Wishs = '/wish-products',
+}
 
 export interface UiStoreInterface {
   page: Record<string, number>;
@@ -7,11 +13,10 @@ export interface UiStoreInterface {
   wishProductPage: number;
   productPageUp: () => void;
   wishProductPageUp: () => void;
-}
-
-enum Page {
-  Products = '/products',
-  Wishs = '/wish-products',
+  productScroll: number;
+  wishProductScroll: number;
+  setScroll: (page: PagePaths, scroll: number) => void;
+  clearScroll: () => void;
 }
 
 export default class UiStore implements UiStoreInterface {
@@ -24,7 +29,7 @@ export default class UiStore implements UiStoreInterface {
       [Page.Wishs]: 1,
     };
     this.scroll = {
-      [Page.Products]: 100,
+      [Page.Products]: 0,
       [Page.Wishs]: 0,
     };
   }
@@ -45,9 +50,9 @@ export default class UiStore implements UiStoreInterface {
   }
 
   @action
-  setProductScroll(scroll: number) {
-    this.scroll[Page.Products] = scroll;
-  }
+  setScroll = (page: PagePaths, scroll: number) => {
+    this.scroll[page] = scroll;
+  };
 
   @computed
   get wishProductPage() {
@@ -57,5 +62,18 @@ export default class UiStore implements UiStoreInterface {
   @action
   wishProductPageUp = () => {
     this.page[Page.Wishs] = this.page[Page.Wishs] + 1;
+  };
+
+  @computed
+  get wishProductScroll() {
+    return this.scroll[Page.Wishs];
+  }
+
+  @action
+  clearScroll = () => {
+    this.scroll = {
+      [Page.Products]: 0,
+      [Page.Wishs]: 0,
+    };
   };
 }

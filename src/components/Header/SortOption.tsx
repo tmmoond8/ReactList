@@ -6,18 +6,25 @@ import { useStore, observer } from '../../store';
 import { SortOption } from '../../store/product';
 
 export default observer(function Navigation(): JSX.Element {
-  const { product } = useStore();
+  const {
+    product,
+    ui: { clearScroll },
+  } = useStore();
   return (
     <Nav>
       <ol>
         <NavItem
-          onClick={() => (product.sortOption = SortOption.PriceDESC)}
+          onClick={() => (
+            clearScroll(), (product.sortOption = SortOption.PriceDESC)
+          )}
           selected={product.sortOption === SortOption.PriceDESC}
         >
           가격 높은순
         </NavItem>
         <NavItem
-          onClick={() => (product.sortOption = SortOption.PriceASC)}
+          onClick={() => (
+            clearScroll(), (product.sortOption = SortOption.PriceASC)
+          )}
           selected={product.sortOption === SortOption.PriceASC}
         >
           가격 낮은순

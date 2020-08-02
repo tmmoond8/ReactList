@@ -18,3 +18,9 @@ export const useScrollFetch = (productPageUp: () => void) => {
     }
   }, [productPageUp]);
 };
+
+export const useMemoryScroll = (scrollTop: number) => {
+  useEffect(() => {
+    window.scrollTo(0, scrollTop);
+  }, [scrollTop]);
+};

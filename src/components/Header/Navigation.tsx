@@ -1,21 +1,38 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { colors } from '../../styles';
 import { navigations } from './constants';
-import { Link } from 'react-router-dom';
+import { useStore } from '../../store';
+import { PagePaths } from '../../types';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function Navigation(): JSX.Element {
-  const [selectedTab, setSelectedTab] = useState(navigations[0].name);
+  const location = useLocation();
+  const [selectedTab, setSelectedTab] = useState(location.pathname);
+  const {
+    ui: { setScroll },
+  } = useStore();
+  const handleClickTab = useCallback(
+    (link: string) => {
+      setScroll(
+        location.pathname as PagePaths,
+        document.scrollingElement?.scrollTop ?? 0,
+      );
+      setSelectedTab(link);
+    },
+    [location.pathname, setScroll],
+  );
+
   return (
     <Nav>
       <ol>
         {navigations.map(({ name, displayName, link }) => (
           <NavItem
             key={name}
-            selected={selectedTab === name}
-            onClick={() => setSelectedTab(name)}
+            selected={selectedTab === link}
+            onClick={() => handleClickTab(link)}
           >
             <Link to={link}>{displayName}</Link>
           </NavItem>

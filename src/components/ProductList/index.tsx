@@ -6,7 +6,7 @@ import ProductItem from './ProductItem';
 import { mobile, desktop } from '../../styles';
 import { Product } from '../../types';
 
-export { useScrollFetch } from './hooks';
+export { useScrollFetch, useMemoryScroll } from './hooks';
 
 interface ListProps {
   products: Product[];
