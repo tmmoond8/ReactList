@@ -17,6 +17,9 @@ const customReset = css`
     border: none;
     outline: none;
   }
+  * {
+    box-sizing: border-box;
+  }
 `;
 
 export default function GlobalStyles(): JSX.Element {

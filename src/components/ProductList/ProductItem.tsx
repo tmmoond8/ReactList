@@ -45,7 +45,7 @@ const Contents = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 60px;
+  height: 98px;
   padding: 16px;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
@@ -58,7 +58,7 @@ const Contents = styled.div`
     -webkit-box-orient: vertical;
     display: -webkit-box;
     -webkit-line-clamp: 2;
-    line-height: 20px;
+    line-height: 22px;
   }
 
   p {
