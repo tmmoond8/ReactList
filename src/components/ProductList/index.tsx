@@ -6,6 +6,8 @@ import ProductItem from './ProductItem';
 import { mobile, desktop } from '../../styles';
 import { Product } from '../../types';
 
+export { useScrollFetch } from './hooks';
+
 interface ListProps {
   products: Product[];
   wishs?: Record<string, boolean | null>;

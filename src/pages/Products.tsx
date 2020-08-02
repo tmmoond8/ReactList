@@ -1,35 +1,20 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import { useMemo, useEffect } from 'react';
-import List from '../components/ProductList';
+import { useMemo } from 'react';
+import List, { useScrollFetch } from '../components/ProductList';
 import { useStore, observer } from '../store';
-import { throttle } from 'throttle-debounce';
 
 export default observer(function Products(): JSX.Element {
   const {
     product: { products: allProducts, toggleWish, wishs },
-    ui,
+    ui: { productPage, productPageUp },
   } = useStore();
 
   const products = useMemo(() => {
-    return allProducts.slice(0, ui.productPage * 10);
-  }, [ui.productPage, allProducts]);
+    return allProducts.slice(0, productPage * 10);
+  }, [allProducts, productPage]);
 
-  useEffect(() => {
-    if (document) {
-      const handleScroll = throttle(300, () => {
-        const {
-          scrollHeight,
-          scrollTop,
-          clientHeight,
-        } = document.documentElement;
-        if (scrollHeight - scrollTop === clientHeight) {
-          ui.productPage = ui.productPage + 1;
-        }
-      });
-      document.addEventListener('scroll', handleScroll);
-    }
-  }, [ui.productPage]);
+  useScrollFetch(productPageUp);
 
   return <List products={products} wishs={wishs} toggleWish={toggleWish} />;
 });
