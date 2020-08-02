@@ -54,42 +54,14 @@ const Wrapper = styled.div`
 
 const CardList = styled.ol`
   display: grid;
+  grid-gap: 16px;
   grid-template-columns: repeat(2, 1fr);
-  & > li {
-    margin-top: 16px;
-    margin-left: 16px;
-  }
-  & > li:nth-of-type(2n - 1) {
-    margin-left: 0;
-  }
-  & > li:nth-of-type(1),
-  & > li:nth-of-type(2) {
-    margin-top: 0;
-  }
+
   ${mobile(css`
     grid-template-columns: repeat(3, 1fr);
-    & > li:nth-of-type(3) {
-      margin-top: 0;
-    }
-    & > li:nth-of-type(2n - 1) {
-      margin-left: 16px;
-    }
-
-    & > li:nth-of-type(3n - 2) {
-      margin-left: 0;
-    }
   `)}
 
   ${desktop(css`
     grid-template-columns: repeat(4, 1fr);
-    & > li:nth-of-type(4) {
-      margin-top: 0;
-    }
-    & > li:nth-of-type(3n - 2) {
-      margin-left: 16px;
-    }
-    & > li:nth-of-type(4n - 3) {
-      margin-left: 0;
-    }
   `)}
 `;

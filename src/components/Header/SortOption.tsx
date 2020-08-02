@@ -14,17 +14,19 @@ export default observer(function Navigation(): JSX.Element {
     <Nav>
       <ol>
         <NavItem
-          onClick={() => (
-            clearScroll(), (product.sortOption = SortOption.PriceDESC)
-          )}
+          onClick={() => {
+            clearScroll();
+            product.sortOption = SortOption.PriceDESC;
+          }}
           selected={product.sortOption === SortOption.PriceDESC}
         >
           가격 높은순
         </NavItem>
         <NavItem
-          onClick={() => (
-            clearScroll(), (product.sortOption = SortOption.PriceASC)
-          )}
+          onClick={() => {
+            clearScroll();
+            product.sortOption = SortOption.PriceASC;
+          }}
           selected={product.sortOption === SortOption.PriceASC}
         >
           가격 낮은순

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
-import { Fragment, useState, useRef, RefObject, useEffect } from 'react';
+import { useState } from 'react';
 import { colors } from '../../styles';
 
 interface ProductItemProps {

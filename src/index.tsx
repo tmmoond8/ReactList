@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { MobxProvider } from './store';
 import * as serviceWorker from './serviceWorker';
-import ProductStore from './store/product';
 
 ReactDOM.render(
   <React.StrictMode>
