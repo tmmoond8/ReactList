@@ -1,5 +1,14 @@
-import axios from 'axios';
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import { Product } from '../types';
 
-export const fetchProducts = async () => {
-  return await axios.get('/products.json');
+const baseURL = window.location.hostname.includes('github.io')
+  ? '/ReactList'
+  : '/';
+
+const api: AxiosInstance = axios.create({
+  baseURL,
+});
+
+export const fetchProducts = async (): Promise<AxiosResponse<Product[]>> => {
+  return await api.get('/products.json');
 };
