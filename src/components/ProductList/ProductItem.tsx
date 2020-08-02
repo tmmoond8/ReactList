@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { colors } from '../../styles';
 
 interface ProductItemProps {
@@ -13,27 +13,32 @@ interface ProductItemProps {
   price: number;
 }
 
-export default function ProductItem(props: ProductItemProps): JSX.Element {
-  const { title, wish, toggleWish, removeWish, thumbnail, price } = props;
-  const [imageLoaded, setImageLoaded] = useState(false);
+export default memo(
+  function ProductItem(props: ProductItemProps): JSX.Element {
+    const { title, wish, toggleWish, removeWish, thumbnail, price } = props;
+    const [imageLoaded, setImageLoaded] = useState(false);
 
-  return (
-    <Item>
-      <Thumbnail src={thumbnail} onLoad={() => setImageLoaded(true)} />
-      <Contents>
-        <h3>{title}</h3>
-        <p>{price.toLocaleString()}원</p>
-      </Contents>
-      {wish !== null && (
-        <ActionButton onClick={toggleWish}>{wish ? '💙' : '🤍'}</ActionButton>
-      )}
-      {wish === null && <ActionButton onClick={removeWish}>❌</ActionButton>}
-      {!imageLoaded && (
-        <Placeholder src="https://d2ur7st6jjikze.cloudfront.net/share/image_loader.gif" />
-      )}
-    </Item>
-  );
-}
+    return (
+      <Item>
+        <Thumbnail src={thumbnail} onLoad={() => setImageLoaded(true)} />
+        <Contents>
+          <h3>{title}</h3>
+          <p>{price.toLocaleString()}원</p>
+        </Contents>
+        {wish !== null && (
+          <ActionButton onClick={toggleWish}>{wish ? '💙' : '🤍'}</ActionButton>
+        )}
+        {wish === null && <ActionButton onClick={removeWish}>❌</ActionButton>}
+        {!imageLoaded && (
+          <Placeholder src="https://d2ur7st6jjikze.cloudfront.net/share/image_loader.gif" />
+        )}
+      </Item>
+    );
+  },
+  (prev, next) => {
+    return prev.wish === next.wish;
+  },
+);
 
 const Item = styled.li`
   display: flex;
